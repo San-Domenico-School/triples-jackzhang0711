@@ -1,18 +1,70 @@
 /**
  * Write a description of class Deck here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @Jack (your name) 
+ * @15 Jan 2025 (a version number or a date)
  */
 
 import greenfoot.*;
+import java.util.ArrayList;
 
 public class Deck 
 {
-    /****************************************************
-    ***   Leave as comment until ready to implement   ***
-    *****************************************************
-    // adds all the cards to the unshuffled deck.   
+    private Card[] unShuffledDeck;
+    private ArrayList<Card> shuffledDeck;
+    
+    public Deck(int numOfCardsInDeck)
+    {
+        numOfCardsInDeck = limitNumCardsInDeck(numOfCardsInDeck);  // limits size to 27 or 81        
+        unShuffledDeck = new Card[numOfCardsInDeck + 1];           // playing cards plus blank card
+        shuffledDeck = new ArrayList<>();                          // Instantiates ArrayList with no elements
+        populateUnshuffledDeckWithCards(numOfCardsInDeck);         // Initializes Unshuffled Deck
+        createShuffledDeck();                                      // Initializes shuffled deck excluding blank card
+    }
+    
+    protected int getNumCardsInDeck()
+    {
+        return shuffledDeck.size();
+    }
+    
+    protected Card getTopCard()
+    {
+        return shuffledDeck.remove(0);
+    }
+    
+    protected Card getShuffledCard(int index)
+    {
+        return shuffledDeck.get(index);
+    }
+    
+    protected ArrayList<Card> getShuffledDeck()
+    {
+        return shuffledDeck;
+    }
+    
+    protected int limitNumCardsInDeck(int limit)
+    {
+        return (limit <= 27) ? 27 : 81;
+    }
+    
+    private void createShuffledDeck()
+    {
+        shuffledDeck.clear();
+        for (int i = 1; i < unShuffledDeck.length; i++) 
+        { 
+            shuffledDeck.add(unShuffledDeck[i]);
+        }
+        for (int i = shuffledDeck.size() - 1; i > 0; i--) 
+        {
+            int j = (int) (Math.random() * (i + 1)); // Random index from 0 to i
+            // Swap shuffledDeck[i] with shuffledDeck[j]
+            Card temp = shuffledDeck.get(i);
+            shuffledDeck.set(i, shuffledDeck.get(j));
+            shuffledDeck.set(j, temp);
+        }
+    }
+    
+    
     private void populateUnshuffledDeckWithCards(int numOfCardsInDeck)        
     {
         unShuffledDeck[0] = new Card(Card.Shape.NO_SHAPE, Card.Color.NO_COLOR,0,0,
@@ -268,6 +320,4 @@ public class Deck
                 }
           }
     }
-    
-    **************  END OF COMMENT BLOCK  ***************/
 }
