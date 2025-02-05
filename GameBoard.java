@@ -5,7 +5,7 @@ import greenfoot.*;
  */
 
 public class GameBoard extends World {
-    private static final int NUM_CARDS_IN_DECK = 81; // Change to 27 for easy mode
+    private static final int NUM_CARDS_IN_DECK = 27; // Change to 27 for easy mode
 
     public GameBoard() {
         super(430, 600, 1); // Initialize the game world with dimensions

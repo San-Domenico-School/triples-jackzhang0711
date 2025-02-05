@@ -22,7 +22,7 @@ public class Dealer extends Actor
     {
         dealBoard();
         // 在板子刚显示时更新UI显示剩余卡片数与分数
-        setUI();
+        setUI(true);
     }
         
     protected void dealBoard()
@@ -36,12 +36,22 @@ public class Dealer extends Actor
         }       
     }
     
-    private void setUI()
+    private void setUI(boolean startup)
     {
-        String cardsRemainingText = new Integer(triplesRemaining * 3).toString();
-        String scoreText = new Integer(Scorekeeper.getScore()).toString();
-        getWorld().showText(cardsRemainingText, 310, 470);
-        getWorld().showText(scoreText, 310, 504); 
+        if(startup)
+        {
+            String cardsRemainingText = new Integer(triplesRemaining * 3).toString();
+            String scoreText = new Integer(0).toString();
+            getWorld().showText(cardsRemainingText, 310, 470);
+            getWorld().showText(scoreText, 310, 504); 
+        }
+        else
+        {
+            String cardsRemainingText = new Integer(triplesRemaining * 3).toString();
+            String scoreText = new Integer(Scorekeeper.getScore()).toString();
+            getWorld().showText(cardsRemainingText, 310, 470);
+            getWorld().showText(scoreText, 310, 504); 
+        }
     } 
     
     protected void checkIfEndGame()
@@ -94,7 +104,7 @@ public class Dealer extends Actor
        
        triplesRemaining--;
        Scorekeeper.updateScore();
-       setUI();
+       setUI(false);
        checkIfEndGame(); 
     }
 }
